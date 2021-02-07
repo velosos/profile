@@ -1,65 +1,53 @@
-import Head from 'next/head'
 import styles from '../styles/Home.module.css'
+import Head from '../src/infra/components/Head'
+import Header from '../src/patterns/Header'
+import Cards from '../src/components/Card'
+import Footer from '../src/patterns/Footer'
+import { LinkedIn, GitHub, MenuBook, CloudQueue }  from '@material-ui/icons';
 
-export default function Home() {
+export default function Home({githubData}) {
   return (
     <div className={styles.container}>
-      <Head>
-        <title>Create Next App</title>
-        <link rel="icon" href="/favicon.ico" />
-      </Head>
-
+      <Head title={`${githubData.name} Profile`}/>
       <main className={styles.main}>
-        <h1 className={styles.title}>
-          Welcome to <a href="https://nextjs.org">Next.js!</a>
-        </h1>
-
-        <p className={styles.description}>
-          Get started by editing{' '}
-          <code className={styles.code}>pages/index.js</code>
-        </p>
-
+        <Header url={githubData.avatar_url}
+                name={githubData.name}
+                description={githubData.bio}/>   
         <div className={styles.grid}>
-          <a href="https://nextjs.org/docs" className={styles.card}>
-            <h3>Documentation &rarr;</h3>
-            <p>Find in-depth information about Next.js features and API.</p>
-          </a>
-
-          <a href="https://nextjs.org/learn" className={styles.card}>
-            <h3>Learn &rarr;</h3>
-            <p>Learn about Next.js in an interactive course with quizzes!</p>
-          </a>
-
-          <a
-            href="https://github.com/vercel/next.js/tree/master/examples"
-            className={styles.card}
-          >
-            <h3>Examples &rarr;</h3>
-            <p>Discover and deploy boilerplate example Next.js projects.</p>
-          </a>
-
-          <a
-            href="https://vercel.com/import?filter=next.js&utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-            className={styles.card}
-          >
-            <h3>Deploy &rarr;</h3>
-            <p>
-              Instantly deploy your Next.js site to a public URL with Vercel.
-            </p>
-          </a>
+          <Cards url={githubData.blog}
+                title={'LinkedIn'}
+                description={'Find out more about my work, what technologies I use and my network'}
+                icon={<LinkedIn/>}  />
+          <Cards url={githubData.html_url}
+                title={'GitHub'}
+                description={'See some repositories, projects and collaborations'}
+                icon={<GitHub/>} />
+          <Cards url={'https://medium.com/@othiagoveloso'}
+                title={'Medium'}
+                description={'Some knowledge and articles about technology and more'}
+                icon={<MenuBook/>} />
+          <Cards url={'https://soundcloud.com/user-488915282'}
+                title={'SoundCloud'}
+                description={'In my free time, I also make music and production'}
+                icon={<CloudQueue/>}  />
         </div>
       </main>
-
-      <footer className={styles.footer}>
-        <a
-          href="https://vercel.com?utm_source=create-next-app&utm_medium=default-template&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Powered by{' '}
-          <img src="/vercel.svg" alt="Vercel Logo" className={styles.logo} />
-        </a>
-      </footer>
+      <Footer/>
     </div>
   )
+}
+
+
+export async function getStaticProps() {
+  
+  const response = await fetch('https://api.github.com/users/velosos')
+  .then((serverResponse) => {
+    return serverResponse.json();
+    
+  });
+  return {
+    props:{
+      githubData:response
+    },
+  }
 }

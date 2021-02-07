@@ -5,10 +5,11 @@
   flex-direction: column;
   justify-content: center;
   align-items: center;
+  font-weight: none;
 }
 
 .main {
-  padding: 5rem 0;
+  padding: 2rem 0;
   flex: 1;
   display: flex;
   flex-direction: column;
@@ -60,6 +61,7 @@
 .description {
   line-height: 1.5;
   font-size: 1.5rem;
+  color:#951477;
 }
 
 .code {
@@ -90,13 +92,14 @@
   border: 1px solid #eaeaea;
   border-radius: 10px;
   transition: color 0.15s ease, border-color 0.15s ease;
+  box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
 }
 
 .card:hover,
 .card:focus,
 .card:active {
-  color: #0070f3;
-  border-color: #0070f3;
+  color: #951477;
+  border-color:#951477;
 }
 
 .card h3 {
@@ -119,4 +122,13 @@
     width: 100%;
     flex-direction: column;
   }
+}
+
+.dot {
+  height: 50px;
+  width: 50px;
+  border-radius: 50%;
+  display: inline-block;
+  border-color:#951477;
+  background-color: #d9d9d9; ;
 }
